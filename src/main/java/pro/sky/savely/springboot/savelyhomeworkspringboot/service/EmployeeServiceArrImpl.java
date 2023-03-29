@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
+public class EmployeeServiceArrImpl implements EmployeeService {
 
 
     private final Employee[] employees = new Employee[10];
