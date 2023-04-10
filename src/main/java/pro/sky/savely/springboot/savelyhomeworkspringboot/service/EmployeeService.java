@@ -5,7 +5,7 @@ import pro.sky.savely.springboot.savelyhomeworkspringboot.models.Employee;
 import java.util.List;
 
 public interface EmployeeService {
-    Employee addEmployee(String firstName, String lastName);
+    Employee addEmployee(String firstName, String lastName, int department, int salary);
 
     Employee removeEmployee(String firstName, String lastName);
 
@@ -14,3 +14,4 @@ public interface EmployeeService {
 
     List<Employee> findAllEmployees();
 }
+

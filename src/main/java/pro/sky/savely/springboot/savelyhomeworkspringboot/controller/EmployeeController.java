@@ -20,7 +20,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public List<Employee> findAllEmployees() {
         return employeeService.findAllEmployees();
@@ -28,8 +28,9 @@ public class EmployeeController {
 
     @GetMapping("/add")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public Employee addEmployee(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        return employeeService.addEmployee(firstName, lastName);
+    public Employee addEmployee(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
+                                @RequestParam("department") int department, @RequestParam("salary") int salary) {
+        return employeeService.addEmployee(firstName, lastName, department, salary);
     }
 
     @GetMapping("/remove")

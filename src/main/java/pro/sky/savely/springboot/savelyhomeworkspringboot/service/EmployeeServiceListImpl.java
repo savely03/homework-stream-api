@@ -3,6 +3,7 @@ package pro.sky.savely.springboot.savelyhomeworkspringboot.service;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.EmployeeAlreadyAddedException;
+import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.EmployeeIncorrectDepartmentException;
 import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.EmployeeNotFoundException;
 import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.EmployeeStoragelsFullException;
 import pro.sky.savely.springboot.savelyhomeworkspringboot.models.Employee;
@@ -13,17 +14,23 @@ import java.util.List;
 @Service
 @Primary
 public class EmployeeServiceListImpl implements EmployeeService {
-    private final List<Employee> employees = new ArrayList<>(10);
+    private final List<Employee> employees;
 
+    public EmployeeServiceListImpl() {
+        employees = new ArrayList<>();
+    }
 
     @Override
-    public Employee addEmployee(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
+    public Employee addEmployee(String firstName, String lastName, int department, int salary) {
+        Employee employee = new Employee(firstName, lastName, department, salary);
         if (employees.contains(employee)) {
             throw new EmployeeAlreadyAddedException("Работник уже существует");
         }
         if (employees.size() == 10) {
             throw new EmployeeStoragelsFullException("Нет свободного места для добавления нового работника");
+        }
+        if (employee.getDepartment() < 1 || employee.getDepartment() > 5) {
+            throw new EmployeeIncorrectDepartmentException("Номер департамента должен быть от 1 до 5!");
         }
         employees.add(employee);
         return employee;
@@ -53,3 +60,4 @@ public class EmployeeServiceListImpl implements EmployeeService {
         return employees;
     }
 }
+
