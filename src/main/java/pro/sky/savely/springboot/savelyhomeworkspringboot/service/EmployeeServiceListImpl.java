@@ -3,7 +3,7 @@ package pro.sky.savely.springboot.savelyhomeworkspringboot.service;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.EmployeeAlreadyAddedException;
-import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.EmployeeIncorrectDepartmentException;
+import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.IncorrectDepartmentException;
 import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.EmployeeNotFoundException;
 import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.EmployeeStoragelsFullException;
 import pro.sky.savely.springboot.savelyhomeworkspringboot.models.Employee;
@@ -30,7 +30,7 @@ public class EmployeeServiceListImpl implements EmployeeService {
             throw new EmployeeStoragelsFullException("Нет свободного места для добавления нового работника");
         }
         if (employee.getDepartment() < 1 || employee.getDepartment() > 5) {
-            throw new EmployeeIncorrectDepartmentException("Номер департамента должен быть от 1 до 5!");
+            throw new IncorrectDepartmentException("Номер департамента должен быть от 1 до 5!");
         }
         employees.add(employee);
         return employee;

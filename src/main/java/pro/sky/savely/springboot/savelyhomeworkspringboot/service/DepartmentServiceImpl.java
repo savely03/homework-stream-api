@@ -1,6 +1,7 @@
 package pro.sky.savely.springboot.savelyhomeworkspringboot.service;
 
 import org.springframework.stereotype.Service;
+import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.IncorrectDepartmentException;
 import pro.sky.savely.springboot.savelyhomeworkspringboot.models.Employee;
 
 import java.util.Comparator;
@@ -20,6 +21,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Employee findEmployeeWithMaxSalaryByDepartment(int department) {
+        if (department < 1 || department > 5) {
+            throw new IncorrectDepartmentException("Номер департамента должен быть от 1 до 5!");
+        }
         return employeeService.findAllEmployees().stream()
                 .filter(employee -> employee.getDepartment() == department)
                 .max(Comparator.comparing(Employee::getSalary)).orElse(null);
@@ -27,6 +31,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Employee findEmployeeWithMinSalaryByDepartment(int department) {
+        if (department < 1 || department > 5) {
+            throw new IncorrectDepartmentException("Номер департамента должен быть от 1 до 5!");
+        }
         return employeeService.findAllEmployees().stream()
                 .filter(employee -> employee.getDepartment() == department)
                 .min(Comparator.comparing(Employee::getSalary)).orElse(null);
@@ -34,6 +41,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Employee> findAllEmployeesByDepartment(int department) {
+        if (department < 1 || department > 5) {
+            throw new IncorrectDepartmentException("Номер департамента должен быть от 1 до 5!");
+        }
         return employeeService.findAllEmployees().stream()
                 .filter(employee -> employee.getDepartment() == department)
                 .collect(Collectors.toList());
