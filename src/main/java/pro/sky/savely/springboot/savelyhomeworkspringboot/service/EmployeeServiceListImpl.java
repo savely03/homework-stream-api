@@ -1,11 +1,9 @@
 package pro.sky.savely.springboot.savelyhomeworkspringboot.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.EmployeeAlreadyAddedException;
-import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.IncorrectDepartmentException;
-import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.EmployeeNotFoundException;
-import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.EmployeeStoragelsFullException;
+import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.*;
 import pro.sky.savely.springboot.savelyhomeworkspringboot.models.Employee;
 
 import java.util.ArrayList;
@@ -20,9 +18,18 @@ public class EmployeeServiceListImpl implements EmployeeService {
         employees = new ArrayList<>();
     }
 
+
+    private void checkFirstNameAndLastName(String firstName, String lastName) {
+        if (StringUtils.isBlank(firstName) || StringUtils.isBlank(lastName) ||
+                !StringUtils.isAlpha(firstName + lastName)) {
+            throw new IncorrectArgumentException("Проверьте правильность переданных данных");
+        }
+    }
+
     @Override
     public Employee addEmployee(String firstName, String lastName, int department, int salary) {
-        Employee employee = new Employee(firstName, lastName, department, salary);
+        checkFirstNameAndLastName(firstName, lastName);
+        Employee employee = new Employee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), department, salary);
         if (employees.contains(employee)) {
             throw new EmployeeAlreadyAddedException("Работник уже существует");
         }
@@ -38,6 +45,7 @@ public class EmployeeServiceListImpl implements EmployeeService {
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
+        checkFirstNameAndLastName(firstName, lastName);
         Employee employee = new Employee(firstName, lastName);
         if (!employees.contains(employee)) {
             throw new EmployeeNotFoundException("Работник не найден");
@@ -48,6 +56,7 @@ public class EmployeeServiceListImpl implements EmployeeService {
 
     @Override
     public Employee findEmployee(String firstName, String lastName) {
+        checkFirstNameAndLastName(firstName, lastName);
         Employee employee = new Employee(firstName, lastName);
         if (!employees.contains(employee)) {
             throw new EmployeeNotFoundException("Работник не найден");

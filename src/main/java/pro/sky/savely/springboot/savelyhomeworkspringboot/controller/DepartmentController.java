@@ -1,7 +1,6 @@
 package pro.sky.savely.springboot.savelyhomeworkspringboot.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.IncorrectDepartmentException;
 import pro.sky.savely.springboot.savelyhomeworkspringboot.exceptions.IncorrectData;
@@ -44,10 +43,10 @@ public class DepartmentController {
         return departmentService.findAllEmployeesGroupByDepartment();
     }
 
-    @ExceptionHandler
-    public ResponseEntity<IncorrectData> handleException(IncorrectDepartmentException exception) {
+    @ExceptionHandler(IncorrectDepartmentException.class)
+    public IncorrectData handleException(IncorrectDepartmentException exception) {
         IncorrectData data = new IncorrectData();
         data.setInfo(exception.getMessage());
-        return new ResponseEntity<>(data, HttpStatus.BAD_REQUEST);
+        return data;
     }
 }
