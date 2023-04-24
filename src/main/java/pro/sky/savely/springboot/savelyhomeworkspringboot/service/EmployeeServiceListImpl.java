@@ -29,7 +29,8 @@ public class EmployeeServiceListImpl implements EmployeeService {
     @Override
     public Employee addEmployee(String firstName, String lastName, int department, int salary) {
         checkFirstNameAndLastName(firstName, lastName);
-        Employee employee = new Employee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), department, salary);
+        Employee employee = new Employee(StringUtils.capitalize(firstName.toLowerCase()),
+                StringUtils.capitalize(lastName.toLowerCase()), department, salary);
         if (employees.contains(employee)) {
             throw new EmployeeAlreadyAddedException("Работник уже существует");
         }
