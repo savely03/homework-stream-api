@@ -3,9 +3,18 @@ package pro.sky.savely.springboot.savelyhomeworkspringboot.models;
 import java.util.Objects;
 
 public class Employee {
-    private String firstName;
-    private String lastName;
+    private final String firstName;
+    private final String lastName;
+    private int department;
+    private int salary;
 
+
+    public Employee(String firstName, String lastName, int department, int salary) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.department = department;
+        this.salary = salary;
+    }
 
     public Employee(String firstName, String lastName) {
         this.firstName = firstName;
@@ -16,16 +25,25 @@ public class Employee {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public int getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(int department) {
+        this.department = department;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 
     @Override
@@ -46,7 +64,9 @@ public class Employee {
         return "Employee{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", department=" + department +
+                ", salary=" + salary +
                 '}';
     }
-
 }
+
